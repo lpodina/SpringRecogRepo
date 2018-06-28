@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="OneDollarUnistrokeRecognizer">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/OneDollarUnistrokeRecognizer/library/OneDollarUnistrokeRecognizer.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/OneDollarUnistrokeRecognizer/library/hdm.pia-1.0.2-jar-with-dependencies.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

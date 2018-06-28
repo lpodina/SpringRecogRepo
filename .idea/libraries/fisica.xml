@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="fisica">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/fisica/library/fisica.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/fisica/library/JBox2D-2.0.1-b250-Library.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/fisica/library/JBox2D-2.0.1-b250-Library.jar!/org/jbox2d/p5/doc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Documents/Processing/libraries/fisica/library/JBox2D-2.0.1-b250-Library.jar!/" />
+    </SOURCES>
+  </library>
+</component>

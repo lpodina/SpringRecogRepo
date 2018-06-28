@@ -98,7 +98,7 @@ public class Test extends PApplet {
         //tst.endShape();
         //tst=createShape();
         //tst.vertex(mouseX,mouseY);
-        tst.beginShape();
+        //tst.beginShape();
         bg = new ArrayList<PShape>();
         //bg.add(new PShape());
         //bg.get(0)=createShape();
@@ -167,7 +167,7 @@ public class Test extends PApplet {
         background(255);
         world.step();
         world.draw(this);
-        shape(tst);
+        //shape(tst);
         if (ava != null) {
             println("force in x", ava.getX(), "Force in Y direction", ava.getY());
         }
@@ -185,7 +185,7 @@ public class Test extends PApplet {
             xPoints.append(str(mouseX));
             xPoints.append(str(mouseY));
             stroke(126);
-            tst.vertex(mouseX, mouseY);
+            //tst.vertex(mouseX, mouseY);
         }
     }
 
@@ -223,15 +223,15 @@ public class Test extends PApplet {
                         addSpring();
                         break;
                     default:
-                        tst.endShape();
-                        tst = createShape();
-                        tst.beginShape();
+                        //tst.endShape();
+                        //tst = createShape();
+                        //tst.beginShape();
                         break;
                 }
             } else {
-                tst.endShape();
-                tst = createShape();
-                tst.beginShape();
+                //tst.endShape();
+                //tst = createShape();
+                //tst.beginShape();
             }
             ;
         } else {
@@ -322,10 +322,10 @@ public class Test extends PApplet {
 
 
     void drawElement() {
-        bg.add(tst);
+        //bg.add(tst);
         flag = false;
-        SIM.addChild(tst);
-        tst.endShape();
+        //SIM.addChild(tst);
+        //tst.endShape();
         //pgDrawing.shape(SIM);
         //pgDrawing.endShape();
         pgDrawing.endDraw();

@@ -6,7 +6,6 @@ import de.voidplus.dollar.*;
 import processing.data.TableRow;
 import processing.svg.*;
 import processing.pdf.*;
-//import geomerative.*;
 import fisica.*;
 import processing.data.StringList;
 import processing.data.Table;

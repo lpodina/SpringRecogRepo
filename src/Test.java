@@ -57,6 +57,7 @@ public class Test extends PApplet {
     PShape SIM;
     ArrayList<PShape> bg;
     PShape tst;
+    ArrayList<PVector> listOfPoints; //the points from the mouse that a user drew
     //RShape grp;
     int NP = 1;
     float x = width / 2;
@@ -74,7 +75,8 @@ public class Test extends PApplet {
         background(255);
         trFlag = true;
         table = loadTable("table.csv", "header");
-        tst = createShape();
+        //tst = createShape();
+        listOfPoints = new ArrayList<PVector>(); //init the listOfPoints
 
 // Training setup:
         train = new Table();
@@ -96,9 +98,11 @@ public class Test extends PApplet {
         pgDrawing.beginDraw();
         pgDrawing.beginShape();
         //tst.endShape();
+        listOfPoints.clear();
         //tst=createShape();
-        //tst.vertex(mouseX,mouseY);
+
         //tst.beginShape();
+        listOfPoints = new ArrayList<>();
         bg = new ArrayList<PShape>();
         //bg.add(new PShape());
         //bg.get(0)=createShape();
@@ -186,6 +190,7 @@ public class Test extends PApplet {
             xPoints.append(str(mouseY));
             stroke(126);
             //tst.vertex(mouseX, mouseY);
+            listOfPoints.add(new PVector(mouseX, mouseY));
         }
     }
 
@@ -226,12 +231,14 @@ public class Test extends PApplet {
                         //tst.endShape();
                         //tst = createShape();
                         //tst.beginShape();
+                        listOfPoints = new ArrayList<>();
                         break;
                 }
             } else {
                 //tst.endShape();
                 //tst = createShape();
                 //tst.beginShape();
+                listOfPoints = new ArrayList<>();
             }
             ;
         } else {
@@ -326,6 +333,7 @@ public class Test extends PApplet {
         flag = false;
         //SIM.addChild(tst);
         //tst.endShape();
+        listOfPoints.clear();
         //pgDrawing.shape(SIM);
         //pgDrawing.endShape();
         pgDrawing.endDraw();
@@ -344,8 +352,9 @@ public class Test extends PApplet {
             //println((v.x-(width/2))/4000-pos_ee.x, ((height/5)+v.y)/4000-pos_ee.y);
             //println(pos_ee.x*4000,pos_ee.y*4000);
         }
-        tst = createShape();
-        tst.beginShape();
+        //tst = createShape();
+        //tst.beginShape();
+        listOfPoints = new ArrayList<>();
     }
 
     void contactEnded(FContact c) {
@@ -462,17 +471,18 @@ public class Test extends PApplet {
         poly.setRotatable(false);
         poly.setName("Mass");
         poly.setRestitution((float) 0.7);
-        for (int i = 0; i < tst.getVertexCount(); i++) {
-            PVector v = tst.getVertex(i);
+        for (int i = 0; i < listOfPoints.size(); i++) {
+            PVector v = listOfPoints.get(i);
             poly.vertex(v.x, v.y);
         }
         TouchBody = poly.getTouching();
         if (TouchBody != null) {
             println("Touching bodies", TouchBody);
         }
-        tst.endShape();
-        tst = createShape();
-        tst.beginShape();
+        //tst.endShape();
+        //tst = createShape();
+        //tst.beginShape();
+        listOfPoints = new ArrayList<>();
         if (poly != null) {
             world.add(poly);
             poly = null;
@@ -487,13 +497,13 @@ public class Test extends PApplet {
         poly.setFill(255, 255, 255);
         poly.setDensity(1);
         poly.setRestitution((float) 0.5);
-        for (int i = 0; i < tst.getVertexCount(); i++) {
-            PVector v = tst.getVertex(i);
+        for (int i = 0; i < listOfPoints.size(); i++) {
+            PVector v = listOfPoints.get(i);
             poly.vertex(v.x, v.y);
         }
-        tst.endShape();
-        tst = createShape();
-        tst.beginShape();
+        //tst.endShape();
+        //tst = createShape();
+        //tst.beginShape();
         if (poly != null) {
             world.add(poly);
             poly = null;
@@ -502,11 +512,11 @@ public class Test extends PApplet {
 
     //**********************************************************************
     void addSpring1() {
-        int verc = tst.getVertexCount();
+        int verc = listOfPoints.size();
         FBody[] steps = new FBody[floor(verc / 10)];
 //**************Making the parts of the spring*************
         for (int i = 0; i < steps.length; i++) {
-            PVector v = tst.getVertex(i * 10);
+            PVector v = listOfPoints.get(i * 10);
             steps[i] = new FBox(boxWidth, 2);
             steps[i].setPosition(v.x, v.y);
             steps[i].setNoStroke();
@@ -518,7 +528,7 @@ public class Test extends PApplet {
 //**************Making the hanging point 1*************
         FCircle hang = new FCircle(10);
         hang.setStatic(true);
-        hang.setPosition(tst.getVertex(0).x, tst.getVertex(0).y - 10);
+        hang.setPosition(listOfPoints.get(0).x, listOfPoints.get(0).y - 10);
         hang.setDrawable(true);
         hang.setGroupIndex(1);
         hang.setBullet(true);
@@ -568,7 +578,7 @@ public class Test extends PApplet {
 
         FCircle hanginv = new FCircle(10);
         hanginv.setStatic(true);
-        hanginv.setPosition(tst.getVertex(0).x + 30, tst.getVertex(0).y);
+        hanginv.setPosition(listOfPoints.get(0).x + 30, listOfPoints.get(0).y);
         hanginv.setDrawable(true);
         hanginv.setDensity(1);
         hanginv.setGroupIndex(1);
@@ -589,7 +599,7 @@ public class Test extends PApplet {
         int endv = (floor(verc / 10)) * 10;
 
         FCircle endpoint = new FCircle(15);
-        endpoint.setPosition(tst.getVertex(verc - 1).x, tst.getVertex(endv - 10).y + 20);
+        endpoint.setPosition(listOfPoints.get(verc - 1).x, listOfPoints.get(endv - 10).y + 20);
         endpoint.setDrawable(true);
         endpoint.setFill(120, 30, 0);
         endpoint.setDensity((float) .02);
@@ -620,9 +630,9 @@ public class Test extends PApplet {
         junta.calculateLength();
         world.add(junta);
 
-        tst.endShape();
-        tst = createShape();
-        tst.beginShape();
+        //tst.endShape();
+        //tst = createShape();
+        //tst.beginShape();
         if (poly != null) {
             world.add(poly);
             poly = null;
@@ -632,8 +642,8 @@ public class Test extends PApplet {
     void addSpring() {
         FloatList sppointsx = new FloatList();
         FloatList sppointsy = new FloatList();
-        for (int i = 0; i < tst.getVertexCount(); i++) {
-            PVector v = tst.getVertex(i);
+        for (int i = 0; i < listOfPoints.size(); i++) {
+            PVector v = listOfPoints.get(i);
             float vx = (v.x);
             float vy = v.y;
             sppointsx.append(vx);
@@ -644,7 +654,7 @@ public class Test extends PApplet {
         float FWidth = sppointsx.max() - sppointsx.min();
         FBox hang = new FBox(FLength, FWidth);
         hang.setStatic(false);
-        hang.setPosition(tst.getVertex(0).x, tst.getVertex(0).y + FLength / 2);
+        hang.setPosition(listOfPoints.get(0).x, listOfPoints.get(0).y + FLength / 2);
         hang.setDrawable(true);
         hang.setGroupIndex(1);
         hang.setDensity((float) .0005 * FWidth / FLength);
@@ -655,7 +665,7 @@ public class Test extends PApplet {
         world.add(hang);
         FCircle hanger = new FCircle(30);
         hanger.setStatic(true);
-        hanger.setPosition(tst.getVertex(0).x, tst.getVertex(0).y - 5);
+        hanger.setPosition(listOfPoints.get(0).x, listOfPoints.get(0).y - 5);
         hanger.setDrawable(true);
         hanger.setGroupIndex(1);
         hanger.setName("pin");
@@ -665,11 +675,11 @@ public class Test extends PApplet {
 //**************connecting the first part of spring to the *************
         FRevoluteJoint juntaPrincipio = new FRevoluteJoint(hanger, hang);
 
-        juntaPrincipio.setAnchor(tst.getVertex(0).x, tst.getVertex(0).y);
+        juntaPrincipio.setAnchor(listOfPoints.get(0).x, listOfPoints.get(0).y);
         juntaPrincipio.setFill(0);
         juntaPrincipio.setDrawable(false);
         world.add(juntaPrincipio);
-        int verc = tst.getVertexCount();
+        int verc = listOfPoints.size();
         FCircle endpoint = new FCircle(30);
         endpoint.setPosition(hang.getX(), sppointsy.max());
         endpoint.setDrawable(true);
@@ -698,9 +708,9 @@ public class Test extends PApplet {
 //  world.add(junta);
 //println("Maxx",sppointsx.max(),"Minx",sppointsx.min());
 //println("Maxy",sppointsy.max(),"Miny",sppointsy.min());
-        tst.endShape();
-        tst = createShape();
-        tst.beginShape();
+        //tst.endShape();
+        //tst = createShape();
+        //tst.beginShape();
     }
 
 

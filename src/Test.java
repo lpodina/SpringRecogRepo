@@ -696,6 +696,7 @@ public class Test extends PApplet {
         jp.setDrawable(false);
         ;
         world.add(jp);
+        
 //FDistanceJoint junta = new FDistanceJoint(hang, endpoint);
 //  junta.setAnchor1(boxWidth/2, 0);
 //  junta.setAnchor2(-boxWidth/2, 0);

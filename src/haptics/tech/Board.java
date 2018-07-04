@@ -18,8 +18,8 @@ public class Board{
      * Constructs a Board linking to the specified serial port at the given serial data speed (baud rate)
      *
      * @param    app the parent Applet this class runs inside (this is your Processing sketch)
-     * @param    portname serial port name that the hardware board is connected to (eg, "com10")
-     * @param    speed the baud rate of serial data transfer
+     * @param    portName serial port name that the hardware board is connected to (eg, "com10")
+     * @param    baud the baud rate of serial data transfer
      */
     public Board(PApplet app, String portName, int baud){
         this.applet = app;
@@ -55,6 +55,7 @@ public class Board{
         }
 
         this.port.write(outData);
+
     }
 
 

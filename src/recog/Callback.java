@@ -1,4 +1,4 @@
-//package de.voidplus.dollar;
+package recog;//package de.voidplus.dollar;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,7 +8,7 @@ import de.voidplus.hdm.pia.Vector;
 import processing.core.PApplet;
 
 /**
- * Callback class
+ * recog.Callback class
  *
  * @author Darius Morawiec
  */

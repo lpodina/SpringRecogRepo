@@ -1,4 +1,4 @@
-//package de.voidplus.dollar;
+package recog;//package de.voidplus.dollar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +13,14 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 /**
- * OneDollar class
+ * recog.OneDollar class
  *
  * @version 1.0.3
  * @author Darius Morawiec
  */
 public class OneDollar {
 
-    public final static String NAME = "OneDollar-Unistroke-Recognizer";
+    public final static String NAME = "recog.OneDollar-Unistroke-Recognizer";
     private final static String VERSION = "1.0.4";
     private final static String REPOSITORY = "https://github.com/nok/onedollar-unistroke-recognizer";
 

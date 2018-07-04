@@ -11,12 +11,16 @@
     <orderEntry type="library" name="fisica" level="project" />
     <orderEntry type="library" name="OneDollarUnistrokeRecognizer" level="project" />
     <orderEntry type="library" name="G4P" level="project" />
-    <orderEntry type="library" name="batikfont" level="project" />
+    <orderEntry type="library" name="batikfont" level="application" />
     <orderEntry type="library" name="grafica" level="project" />
-    <orderEntry type="library" name="batik-awt-util-1.8" level="project" />
+    <orderEntry type="library" name="batik-awt-util-1.8" level="application" />
     <orderEntry type="library" name="processing-svg-3.3.6" level="project" />
     <orderEntry type="library" name="itext" level="project" />
     <orderEntry type="library" name="pdf-2.2.1" level="project" />
     <orderEntry type="library" name="processing-core.jar (1)" level="project" />
+    <orderEntry type="library" name="CountdownTimer" level="project" />
+    <orderEntry type="library" name="serial" level="project" />
+    <orderEntry type="library" name="RXTXcomm" level="project" />
+    <orderEntry type="library" name="opengl" level="project" />
   </component>
 </module>

@@ -1,75 +1,73 @@
+package recog;
+
 import processing.core.*;
 import processing.core.PApplet;
-import processing.opengl.*;
 import processing.data.FloatList;
-import de.voidplus.dollar.*;
 import processing.data.TableRow;
-import processing.svg.*;
-import processing.pdf.*;
 import fisica.*;
 import processing.data.StringList;
 import processing.data.Table;
 
 import java.util.ArrayList;
 
-public class Test extends PApplet {
+public class SpringRecog extends PApplet {
 
     public static void main(String[] args) {
         //String[] processingArgs = {"MySketch"};
         //MySketch mySketch = new MySketch();
-        PApplet.main(new String[]{"Test"});
+        PApplet.main(new String[]{"recog.SpringRecog"});
     }
 
 
     //*******************************************************************************************************
-    FWorld world;
-    FPoly poly;
-    FBody ava;
-    FBlob blob;
-    PImage spring;
-    FloatList sppointsx;
-    FloatList sppointsy;
-    ArrayList<FBody> TouchBody;
-    ArrayList<FJoint> Joints;
+    protected FWorld world;
+    protected FPoly poly;
+    protected FBody ava;
+    protected FBlob blob;
+    protected PImage spring;
+    protected FloatList sppointsx;
+    protected FloatList sppointsy;
+    protected ArrayList<FBody> TouchBody;
+    protected ArrayList<FJoint> Joints;
     //*****
-    float frequency = 5;
-    float damping = 10;
-    float puenteY;
-    int boxWidth = 4;
+    protected float frequency = 5;
+    protected float damping = 10;
+    protected float puenteY;
+    protected int boxWidth = 4;
     //********************************************************************************************************
-    OneDollar one;
+    protected OneDollar one;
     // Training setup:
-    ArrayList<PVector> Pointlist;
-    ArrayList<PVector> Pointlists;
-    StringList xPoints;
-    StringList yPoints;
-    PVector Po;
-    String pointSave;
-    Table table;
-    Table train;
-    char lable = 'N';
-    PVector po;
-    Boolean trFlag;
-    int[] candidate;
+    protected ArrayList<PVector> Pointlist;
+    protected ArrayList<PVector> Pointlists;
+    protected StringList xPoints;
+    protected StringList yPoints;
+    protected PVector Po;
+    protected String pointSave;
+    protected Table table;
+    protected Table train;
+    protected char lable = 'N';
+    protected PVector po;
+    protected Boolean trFlag;
+    protected int[] candidate;
     /**********************************************************************************************************************/
     /*Defining the sketching Env*/
-    PGraphics pgDrawing;
-    PShape SIM;
-    ArrayList<PShape> bg;
-    PShape tst;
-    ArrayList<PVector> listOfPoints; //the points from the mouse that a user drew
+    protected PGraphics pgDrawing;
+    protected PShape SIM;
+    protected ArrayList<PShape> bg;
+    protected PShape tst;
+    protected ArrayList<PVector> listOfPoints; //the points from the mouse that a user drew
     //RShape grp;
-    int NP = 1;
-    float x = width / 2;
-    float y = height / 2;
-    boolean flag = true;
-    int selected;
-    boolean avatar = false;
+    protected int NP = 1;
+    protected float x = width / 2;
+    protected float y = height / 2;
+    protected boolean flag = true;
+    protected int selected;
+    protected boolean avatar = false;
 
 
     /**********************************************************************************************************************/
 
-
+    @Override
     public void setup() {
         size(1200, 700);
         background(255);
@@ -106,7 +104,7 @@ public class Test extends PApplet {
         bg = new ArrayList<PShape>();
         //bg.add(new PShape());
         //bg.get(0)=createShape();
-        SIM = createShape(GROUP);
+        //SIM = createShape(GROUP);
 
 //*************************** making the phyiscal word
         Fisica.init(this);
@@ -328,7 +326,7 @@ public class Test extends PApplet {
     }
 
 
-    void drawElement() {
+    /*public void drawElement() {
         //bg.add(tst);
         flag = false;
         //SIM.addChild(tst);
@@ -355,7 +353,7 @@ public class Test extends PApplet {
         //tst = createShape();
         //tst.beginShape();
         listOfPoints = new ArrayList<>();
-    }
+    }*/
 
     void contactEnded(FContact c) {
         FBody b = (FBody) c.getBody1();
@@ -696,7 +694,7 @@ public class Test extends PApplet {
         jp.setDrawable(false);
         ;
         world.add(jp);
-        
+
 //FDistanceJoint junta = new FDistanceJoint(hang, endpoint);
 //  junta.setAnchor1(boxWidth/2, 0);
 //  junta.setAnchor2(-boxWidth/2, 0);

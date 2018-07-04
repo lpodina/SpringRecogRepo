@@ -173,9 +173,6 @@ public class SpringRecog extends PApplet {
         if (ava != null) {
             println("force in x", ava.getX(), "Force in Y direction", ava.getY());
         }
-
-        //background(255);
-        //one.draw();
     }
 
     //one.track
@@ -193,8 +190,6 @@ public class SpringRecog extends PApplet {
     }
 
     public void mouseReleased() {
-        //println(Pointlist);
-        //println(Pointlist.size());
         if (trFlag == false) {
             FBody hovered = world.getBody(mouseX, mouseY);
             if (hovered == null) {
@@ -637,7 +632,7 @@ public class SpringRecog extends PApplet {
         }
     }
 
-    void addSpring() {
+    private void addSpring() {
         FloatList sppointsx = new FloatList();
         FloatList sppointsy = new FloatList();
         for (int i = 0; i < listOfPoints.size(); i++) {
@@ -687,6 +682,7 @@ public class SpringRecog extends PApplet {
         endpoint.setName("EndF");
 //endpoint.setStatic(true);
         world.add(endpoint);
+        //ava = endpoint;
         FRevoluteJoint jp = new FRevoluteJoint(endpoint, hang);
 
         jp.setAnchor(hang.getX(), sppointsy.max());
@@ -707,9 +703,7 @@ public class SpringRecog extends PApplet {
 //  world.add(junta);
 //println("Maxx",sppointsx.max(),"Minx",sppointsx.min());
 //println("Maxy",sppointsy.max(),"Miny",sppointsy.min());
-        //tst.endShape();
-        //tst = createShape();
-        //tst.beginShape();
+        listOfPoints = new ArrayList<>();
     }
 
 

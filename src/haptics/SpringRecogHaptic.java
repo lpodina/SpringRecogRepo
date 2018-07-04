@@ -12,6 +12,7 @@ import processing.core.PShape;
 import processing.core.PVector;
 import processing.data.StringList;
 import processing.data.Table;
+import processing.serial.Serial;
 import recog.OneDollar;
 import recog.SpringRecog;
 import com.dhchoi.CountdownTimer;
@@ -74,7 +75,7 @@ public class SpringRecogHaptic extends SpringRecog {
 
         /* BOARD */
         /* BOARD */
-        haply_board = new Board(this, "COM3", 0); //Put your COM# port here
+        haply_board = new Board(this, Serial.list()[0], 0); //Put your COM# port here
 
         /* DEVICE */
         haply_2DoF = new Device(HaplyTwoDOF, deviceID, haply_board);
@@ -93,6 +94,21 @@ public class SpringRecogHaptic extends SpringRecog {
 
     }
 
+    @Override
+    public void draw() {
+        background(255);
+        if (!rendering_force) {
+            world.step();
+            world.draw(this);
+        }
+        if (ava != null) {
+            println("force in x", ava.getX(), "Force in Y direction", ava.getY());
+        }
+
+
+
+    }
+
     public void detected(String gesture, float percent, int startX, int startY, int centroidX, int centroidY, int endX, int endY){
         //println("Gesture: "+gesture+", "+startX+"/"+startY+", "+centroidX+"/"+centroidY+", "+endX+"/"+endY);
     }
@@ -105,19 +121,19 @@ public class SpringRecogHaptic extends SpringRecog {
 
     public void onTickEvent(CountdownTimer t, long timeLeftUntilFinish){
 
+
         rendering_force = true;
         if (ava!=null){
+            println("ava not null");
 //  //  /* GET END-EFFECTOR STATE (TASK SPACE) */
             if (haply_board.data_available()) {
-//    /* GET END-EFFECTOR STATE (TASK SPACE) */
+
+                println("haply data available");
 
                 angles.set(haply_2DoF.get_device_angles());
                 pos_ee.set( haply_2DoF.get_device_position(angles.array()));
                 pos_ee.mult(500);
-//    //println(ava.getX(),ava.getY());
 
-
-                //s.updateCouplingForce();
             }
             f_ee.set(-(ava.getX()+(pos_ee.x*20)+offsetX)*1000, +(ava.getY()-(pos_ee.y*20)+offsetY)*1000);
             //f_ee.set(0,0);
@@ -128,21 +144,19 @@ public class SpringRecogHaptic extends SpringRecog {
             ava.setPosition(-(pos_ee.x*20)-offsetX, (pos_ee.y*20)-offsetY);
 
         }
-        else{
-            //f_ee.set(0,0);
-        }
-        world.step(1.0f/25.0f);
+
+        println("ava null"); //TODO check avatar setting to a body, that might have a bug in it
+
+        //world.step(1.0f/25.0f);
         rendering_force = false;
 
-/************************************************************/
-
-        world.step(1.0f/1000.0f);
+        //world.step(1.0f/1000.0f);
 
         s.updateCouplingForce();
 
         f_ee.set(-s.getVCforceX(), s.getVCforceY());
 
-        f_ee.div(100000); //
+        f_ee.div(100000);
         haply_2DoF.set_device_torques(f_ee.array());
         torques.set(haply_2DoF.mechanisms.get_torque());
         haply_2DoF.device_write_torques();
@@ -160,7 +174,7 @@ public class SpringRecogHaptic extends SpringRecog {
      */
     public void onFinishEvent(CountdownTimer t){
         println("Resetting timer...");
-        haptic_timer.reset();
+        haptic_timer.reset(CountdownTimer.StopBehavior.STOP_IMMEDIATELY);
         haptic_timer = CountdownTimerService.getNewCountdownTimer(this).configure(SIMULATION_PERIOD, HOUR_IN_MILLIS).start();
     }
 

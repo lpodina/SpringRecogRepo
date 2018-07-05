@@ -25,6 +25,8 @@ import static haptics.tech.DeviceType.HaplyTwoDOF;
 public class SpringRecogHaptic extends SpringRecog {
 
 
+    private float pixelsPerMeter = 10000;
+
     public static void main(String[] args) {
         PApplet.main(new String[]{"haptics.SpringRecogHaptic"});
     }
@@ -75,7 +77,7 @@ public class SpringRecogHaptic extends SpringRecog {
 
         /* BOARD */
 
-        haply_board = new Board(this, "COM3", 0); //Put your COM# port here
+        haply_board = new Board(this, "COM3", 9600); //Put your COM# port here
 
         /* DEVICE */
         haply_2DoF = new Device(HaplyTwoDOF, deviceID, haply_board);
@@ -101,9 +103,9 @@ public class SpringRecogHaptic extends SpringRecog {
             world.step();
             world.draw(this);
         }
-        if (ava != null) {
-            println("force in x", ava.getX(), "Force in Y direction", ava.getY());
-        }
+        /*if (ava != null) {
+            println("ava.getX() = ", ava.getX(), "ava.getY() = ", ava.getY());
+        }*/
 
 
 
@@ -119,25 +121,63 @@ public class SpringRecogHaptic extends SpringRecog {
      * Haptics simulation event, engages state of physical mechanism, calculates and updates physics simulation conditions
      **********************************************************************************************************************/
 
-    public void onTickEvent(CountdownTimer t, long timeLeftUntilFinish){
+    public void onTickEvent(CountdownTimer t, long timeLeftUntilFinish) {
+        //println("ontick called");
+
+        /* check if new data is available from physical device */
+        if (haply_board.data_available()) {
+
+            //println("board data available");
+            angles.set(haply_2DoF.get_device_angles()); //update device angles
 
 
-        rendering_force = true;
+            pos_ee.set(haply_2DoF.get_device_position(angles.array()));
+            pos_ee.set(device2graphics(pos_ee));
+
+            // TODO update the pen's virtual position to that of the body after this
+
+            //current_charge.x_pos =  int((pos_ee.x)*pixelsPerMeter)+int(offset.x); //which coord system are these in?
+            //current_charge.y_pos = int((pos_ee.y )*pixelsPerMeter)+int(offset.y);
+
+
+            //println("pos_ee: ", pos_ee.x * pixelsPerMeter, ", ", pos_ee.y * pixelsPerMeter);
+
+            //set_f_ee(); //set f_ee to what it should be
+        }
+
+        if (haply_2DoF != null) {
+            //taus = haply_2DoF.mechanisms.get_torque(); //this is for the graphing of the torques
+
+        }
+
+
+        haply_2DoF.set_device_torques(f_ee.array());
+        torques.set(haply_2DoF.mechanisms.get_torque());
+        haply_2DoF.device_write_torques();
+        println("pos_ee: ", pos_ee.x * pixelsPerMeter, ", ", pos_ee.y * pixelsPerMeter);
+
+        //lastpos_ee = pos_ee; //if you ever need to keep track of the position.
+    }
+
+    /* this is what the onTick function was before (down there) */
+
+       /* rendering_force = true; //flag for if you should be rendering force (this is used in draw so that you're not drawing and rendering force at the same time)
+
         if (ava!=null){
-            println("ava not null");
-//  //  /* GET END-EFFECTOR STATE (TASK SPACE) */
+
+//  //   GET END-EFFECTOR STATE (TASK SPACE)
             if (haply_board.data_available()) {
 
                 println("haply data available");
 
                 angles.set(haply_2DoF.get_device_angles());
                 pos_ee.set( haply_2DoF.get_device_position(angles.array()));
+                //pos_ee.set(device2graphics(pos_ee));
                 pos_ee.mult(500);
-
             }
             f_ee.set(-(ava.getX()+(pos_ee.x*20)+offsetX)*1000, +(ava.getY()-(pos_ee.y*20)+offsetY)*1000);
-            //f_ee.set(0,0);
-            f_ee.div(200); //
+
+            f_ee.div(200);
             haply_2DoF.set_device_torques(f_ee.array());
             torques.set(haply_2DoF.mechanisms.get_torque());
             haply_2DoF.device_write_torques();
@@ -145,7 +185,7 @@ public class SpringRecogHaptic extends SpringRecog {
 
         }
 
-        println("ava null"); //TODO check avatar setting to a body, that might have a bug in it
+        //println("ava null");
 
         //world.step(1.0f/25.0f);
         rendering_force = false;
@@ -160,11 +200,13 @@ public class SpringRecogHaptic extends SpringRecog {
         haply_2DoF.set_device_torques(f_ee.array());
         torques.set(haply_2DoF.mechanisms.get_torque());
         haply_2DoF.device_write_torques();
-        angles.set(haply_2DoF.get_device_angles());
+        //angles.set(haply_2DoF.get_device_angles());
         pos_ee.set( haply_2DoF.get_device_position(angles.array()));
         pos_ee.mult(100);
 
-    }
+        //println("pos_ee: ", pos_ee);*/
+
+    //}
 
 
     /* Timer control event functions **************************************************************************************/
@@ -176,6 +218,12 @@ public class SpringRecogHaptic extends SpringRecog {
         println("Resetting timer...");
         haptic_timer.reset(CountdownTimer.StopBehavior.STOP_IMMEDIATELY);
         haptic_timer = CountdownTimerService.getNewCountdownTimer(this).configure(SIMULATION_PERIOD, HOUR_IN_MILLIS).start();
+    }
+
+    public PVector device2graphics(PVector deviceFrame){
+
+        deviceFrame.set(-deviceFrame.x, deviceFrame.y);
+        return new PVector(deviceFrame.x, deviceFrame.y);
     }
 
 

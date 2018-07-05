@@ -83,6 +83,8 @@ public class Board{
         if(inData[0] != deviceID){
             System.err.println("Error, another device expects this data!");
         }
+        //System.out.println("inData[0] is " + Integer.toString((int) inData[0]) + ", deviceID is " + Integer.toString((int) deviceID));
+
 
         int j = 1;
 

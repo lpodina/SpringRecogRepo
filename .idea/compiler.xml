@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
       <entry name="!?*.form" />
@@ -14,5 +13,6 @@
       <entry name="!?*.aj" />
       <entry name="?*.png" />
     </wildcardResourcePatterns>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>

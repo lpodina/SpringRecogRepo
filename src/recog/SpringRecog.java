@@ -450,7 +450,9 @@ public class SpringRecog extends PApplet {
             ava = world.getBody(mouseX, mouseY);
             if (ava != null) {
                 println("avatar is being selected");
+                println("ava pos: ", ava.getX(), ", ", ava.getY());
             }
+
         }
     }
 

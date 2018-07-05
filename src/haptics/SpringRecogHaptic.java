@@ -74,8 +74,8 @@ public class SpringRecogHaptic extends SpringRecog {
         /* Initialization of the Board, Device, and Device Components */
 
         /* BOARD */
-        /* BOARD */
-        haply_board = new Board(this, Serial.list()[0], 0); //Put your COM# port here
+
+        haply_board = new Board(this, "COM3", 0); //Put your COM# port here
 
         /* DEVICE */
         haply_2DoF = new Device(HaplyTwoDOF, deviceID, haply_board);

@@ -20,7 +20,7 @@
     <orderEntry type="library" name="processing-core.jar (1)" level="project" />
     <orderEntry type="library" name="CountdownTimer" level="project" />
     <orderEntry type="library" name="serial" level="project" />
-    <orderEntry type="library" name="RXTXcomm" level="project" />
     <orderEntry type="library" name="opengl" level="project" />
+    <orderEntry type="library" name="RXTXcomm" level="project" />
   </component>
 </module>

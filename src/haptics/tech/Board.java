@@ -1,5 +1,6 @@
 package haptics.tech;
 
+import gnu.io.SerialPort;
 import processing.core.PApplet;
 import processing.serial.*;
 
@@ -23,6 +24,7 @@ public class Board{
      */
     public Board(PApplet app, String portName, int baud){
         this.applet = app;
+        
         port = new Serial(applet, portName, baud);
         port.clear();
     }

@@ -1,4 +1,4 @@
-package haptics;
+package recogwithhaptics;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;

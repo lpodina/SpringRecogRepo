@@ -1,6 +1,8 @@
 package haptics.tech;
 
 
+import exceptions.BoardException;
+
 public class Device{
 
     public    DeviceType       device_type;
@@ -206,7 +208,7 @@ public class Device{
     /**
      * hardware setup verification function (currently not used)
      */
-    public void device_set_verification(){
+    public void device_set_verification()throws BoardException{
 
         communicationType = 0;
 
@@ -273,7 +275,7 @@ public class Device{
      * Receives angle position inforamation from the serial port interface and updates each indexed encoder sensor
      * to their respective received angle
      */
-    public void device_read_angles(){
+    public void device_read_angles() {
 
         communicationType = 1;
 
@@ -292,7 +294,7 @@ public class Device{
     /**
      * Receives data from the serial port interface and updates parameters in mechanisms
      */
-    public void receive_data(){
+    public void receive_data() throws BoardException{
         communicationType = 1;
         float data[] = deviceLink.receive(communicationType, deviceID, actuator_positions);
         mechanisms.set_mechanism_parameters(data);
@@ -356,7 +358,7 @@ public class Device{
      *
      * @returns    angles information received from device hardware
      */
-    public float[] get_device_angles(){
+    public float[] get_device_angles() {
 
         this.device_read_angles();
         float[] angles = new float[encoders.length];
@@ -374,7 +376,7 @@ public class Device{
      *
      * @returns    end-effector coordinate position
      */
-    public float[] get_device_position(){
+    public float[] get_device_position() throws BoardException{
 
         this.device_read_angles();
         float[] angles = new float[encoders.length];

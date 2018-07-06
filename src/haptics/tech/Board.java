@@ -1,5 +1,6 @@
 package haptics.tech;
 
+import exceptions.BoardException;
 import gnu.io.SerialPort;
 import processing.core.PApplet;
 import processing.serial.*;
@@ -69,7 +70,7 @@ public class Board{
      * @param     positions the motor positions the data is meant for
      * @return    formatted float data array from the received data
      */
-    public float[] receive(byte type, byte deviceID, byte[] positions){
+    public float[] receive(byte type, byte deviceID, byte[] positions) {
 
         int size = set_buffer_length(type, positions);
 
@@ -82,6 +83,7 @@ public class Board{
 
         if(inData[0] != deviceID){
             System.err.println("Error, another device expects this data!");
+            //throw new BoardException();
         }
         //System.out.println("inData[0] is " + Integer.toString((int) inData[0]) + ", deviceID is " + Integer.toString((int) deviceID));
 
